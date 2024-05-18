@@ -1,0 +1,245 @@
+openapi: 3.0.0
+info:
+  title: JkTechPractical
+  version: 1.0.0
+servers:
+  - url: http://localhost:5401
+tags:
+  - name: Auth
+  - name: Bucket
+  - name: File
+components:
+  securitySchemes:
+    bearerAuth: # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT # optional, arbitrary value for documentation purposes
+paths:
+  /api/auth/register:
+    post:
+      tags:
+        - Auth
+      summary: Register User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                username: Dharm Joshi
+                email: dharmjoshi01@gmil.com
+                password: DharmJoshi@1911
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /api/auth/login:
+    post:
+      tags:
+        - Auth
+      summary: Login User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                email: dharmjoshi01@gmil.com
+                password: DharmJoshi@1911
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /api/bucket/create:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - Bucket
+      summary: Create Bucket
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                bucketName: Dharm's Bucket
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            Bearer
+            Token
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /api/bucket/get-list:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - Bucket
+      summary: Get bucket list
+      requestBody:
+        content: {}
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            Bearer
+            Token
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /api/bucket/update:
+    patch:
+      security:
+        - bearerAuth: []
+      tags:
+        - Bucket
+      summary: update bucket details
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                bucketId: 6648849d25eb078b44ba4336
+                bucketName: Dharm's Bucket
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            Bearer
+            Token
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /api/bucket/delete:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - Bucket
+      summary: Delete bucket
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                bucketId: 6648849d25eb078b44ba4336
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            Bearer
+            Token
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /api/file/upload:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - File
+      summary: Upload file
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                bucketId:
+                  type: string
+                  example: 6648a20283ec226e83e77cb2
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            Bearer
+            Token
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /api/file/get-list:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - File
+      summary: Get list per bucket
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                bucketId: 6648a20283ec226e83e77cb2
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            Bearer
+            Token
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /api/file/delete:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - File
+      summary: Delete file
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                bucketId: 6648a20283ec226e83e77cb2
+                fileId: 6648a5d6c5008b90532d970d
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            Bearer
+            Token
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
